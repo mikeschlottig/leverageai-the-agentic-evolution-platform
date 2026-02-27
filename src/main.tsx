@@ -30,6 +30,8 @@ import { EdgeProxyPage } from '@/pages/dashboard/EdgeProxyPage'
 import { FastTrackPage } from '@/pages/dashboard/FastTrackPage'
 import { PackagesPage } from '@/pages/dashboard/PackagesPage'
 import { DeploymentsPage } from '@/pages/dashboard/DeploymentsPage'
+import { ChatPage } from '@/pages/ChatPage';
+import { WorkersAIChatPage } from '@/pages/WorkersAIChatPage';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -42,7 +44,7 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     errorElement: <RouteErrorBoundary />,
     children: [
-      { path: "", element: <Navigate to="overview" replace /> },
+      { path: "", element: <Navigate to="chat" replace /> },
       { path: "overview", element: <OverviewPage /> },
       { path: "agents", element: <AgentManagerPage /> },
       { path: "health", element: <HealthPage /> },
@@ -59,6 +61,8 @@ const router = createBrowserRouter([
       { path: "fast-track", element: <FastTrackPage /> },
       { path: "packages", element: <PackagesPage /> },
       { path: "deploy", element: <DeploymentsPage /> },
+      { path: "chat", element: <ChatPage /> },
+      { path: "workersai", element: <WorkersAIChatPage /> },
       { path: "*", element: <div className="p-8 text-zinc-500 font-mono text-xs uppercase italic">Module routing incomplete... contact system admin.</div> },
     ]
   }
