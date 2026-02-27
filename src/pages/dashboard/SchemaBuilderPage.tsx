@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Database, Table as TableIcon, Key, FileCode, Plus, Search } from 'lucide-react';
+import { Database, Table as TableIcon, Key, FileCode, Plus, Search, Terminal } from 'lucide-react';
 export function SchemaBuilderPage() {
   const tables = [
     { name: 'users', rows: '1.2M', size: '240MB' },
@@ -23,7 +23,6 @@ export function SchemaBuilderPage() {
           </Button>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Table List Sidebar */}
           <div className="lg:col-span-3 space-y-4">
             <h3 className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] px-1">Registry</h3>
             <div className="space-y-2">
@@ -40,7 +39,6 @@ export function SchemaBuilderPage() {
               ))}
             </div>
           </div>
-          {/* Main Visualizer Area */}
           <div className="lg:col-span-9 space-y-6">
             <Card className="bg-zinc-900/40 border-zinc-800 overflow-hidden">
               <CardHeader className="border-b border-zinc-900 bg-zinc-900/20 px-6 py-4">
@@ -90,10 +88,10 @@ export function SchemaBuilderPage() {
                   <h4 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2">
                     <Terminal className="h-3 w-3" /> Raw DDL
                   </h4>
-                  <Textarea 
-                    readOnly 
+                  <Textarea
+                    readOnly
                     value={`CREATE TABLE users (\n  id TEXT PRIMARY KEY,\n  email TEXT UNIQUE NOT NULL,\n  created_at INTEGER DEFAULT (strftime('%s', 'now')),\n  tier INTEGER DEFAULT 0\n);`}
-                    className="bg-zinc-900 border-zinc-800 text-emerald-500/80 font-mono text-xs min-h-[120px] resize-none focus-visible:ring-0" 
+                    className="bg-zinc-900 border-zinc-800 text-emerald-500/80 font-mono text-xs min-h-[120px] resize-none focus-visible:ring-0"
                   />
                 </div>
               </CardContent>

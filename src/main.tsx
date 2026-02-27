@@ -26,6 +26,10 @@ import { StoragePage } from '@/pages/dashboard/StoragePage'
 import { SafetyPage } from '@/pages/dashboard/SafetyPage'
 import { TerminalPage } from '@/pages/dashboard/TerminalPage'
 import { SettingsPage } from '@/pages/dashboard/SettingsPage'
+import { EdgeProxyPage } from '@/pages/dashboard/EdgeProxyPage'
+import { FastTrackPage } from '@/pages/dashboard/FastTrackPage'
+import { PackagesPage } from '@/pages/dashboard/PackagesPage'
+import { DeploymentsPage } from '@/pages/dashboard/DeploymentsPage'
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -51,7 +55,11 @@ const router = createBrowserRouter([
       { path: "safety", element: <SafetyPage /> },
       { path: "terminal", element: <TerminalPage /> },
       { path: "settings", element: <SettingsPage /> },
-      { path: "*", element: <div className="p-8 text-zinc-500 font-mono text-xs">Module under construction in Phase 4...</div> },
+      { path: "edge", element: <EdgeProxyPage /> },
+      { path: "fast-track", element: <FastTrackPage /> },
+      { path: "packages", element: <PackagesPage /> },
+      { path: "deploy", element: <DeploymentsPage /> },
+      { path: "*", element: <div className="p-8 text-zinc-500 font-mono text-xs uppercase italic">Module routing incomplete... contact system admin.</div> },
     ]
   }
 ]);
