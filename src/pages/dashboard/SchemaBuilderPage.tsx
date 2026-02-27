@@ -1,9 +1,8 @@
 import React from 'react';
-import { toast } from 'sonner';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Database, Table as TableIcon, Key, FileCode, Plus, Search, Terminal } from 'lucide-react';
+import { Database, Table as TableIcon, Key, FileCode, Plus, Search } from 'lucide-react';
 export function SchemaBuilderPage() {
   const tables = [
     { name: 'users', rows: '1.2M', size: '240MB' },
@@ -19,14 +18,12 @@ export function SchemaBuilderPage() {
             <h1 className="text-3xl font-black tracking-tighter text-white uppercase italic">D1 Explorer</h1>
             <p className="text-zinc-500 text-sm">Visualize and construct your high-performance SQLite schemas.</p>
           </div>
-          <Button 
-            className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold uppercase text-xs tracking-widest"
-            onClick={() => toast.promise(new Promise(r=>setTimeout(r,2000)), {loading:'Creating new D1 table...', success:'Table created successfully', error:'Table creation failed - invalid schema'} )}
-          >
+          <Button className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold uppercase text-xs tracking-widest">
             <Plus className="h-4 w-4 mr-2" /> New Table
           </Button>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Table List Sidebar */}
           <div className="lg:col-span-3 space-y-4">
             <h3 className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] px-1">Registry</h3>
             <div className="space-y-2">
@@ -43,6 +40,7 @@ export function SchemaBuilderPage() {
               ))}
             </div>
           </div>
+          {/* Main Visualizer Area */}
           <div className="lg:col-span-9 space-y-6">
             <Card className="bg-zinc-900/40 border-zinc-800 overflow-hidden">
               <CardHeader className="border-b border-zinc-900 bg-zinc-900/20 px-6 py-4">
@@ -50,12 +48,7 @@ export function SchemaBuilderPage() {
                   <CardTitle className="text-sm font-bold text-zinc-300 uppercase tracking-widest flex items-center gap-2">
                     <FileCode className="h-4 w-4 text-emerald-500" /> TABLE_SCHEMA: <span className="text-zinc-100">users</span>
                   </CardTitle>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className="h-8 text-zinc-500 hover:text-white"
-                    onClick={() => toast.info('Loading data preview...')}
-                  >
+                  <Button variant="ghost" size="sm" className="h-8 text-zinc-500 hover:text-white">
                     <Search className="h-3.5 w-3.5 mr-1" /> Data Preview
                   </Button>
                 </div>
@@ -84,18 +77,10 @@ export function SchemaBuilderPage() {
                   <div className="p-6 bg-zinc-950/50 space-y-4">
                     <h4 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Quick Actions</h4>
                     <div className="grid grid-cols-2 gap-2">
-                      <Button 
-                        variant="outline" 
-                        className="border-zinc-800 h-20 flex-col text-[10px] gap-2 hover:bg-zinc-900"
-                        onClick={() => toast.success('Primary key constraint applied')}
-                      >
+                      <Button variant="outline" className="border-zinc-800 h-20 flex-col text-[10px] gap-2 hover:bg-zinc-900">
                         <Key className="h-4 w-4 text-amber-500" /> Primary Key
                       </Button>
-                      <Button 
-                        variant="outline" 
-                        className="border-zinc-800 h-20 flex-col text-[10px] gap-2 hover:bg-zinc-900"
-                        onClick={() => toast.success('Composite indexes optimized')}
-                      >
+                      <Button variant="outline" className="border-zinc-800 h-20 flex-col text-[10px] gap-2 hover:bg-zinc-900">
                         <Database className="h-4 w-4 text-indigo-400" /> Indexing
                       </Button>
                     </div>
@@ -105,10 +90,10 @@ export function SchemaBuilderPage() {
                   <h4 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2">
                     <Terminal className="h-3 w-3" /> Raw DDL
                   </h4>
-                  <Textarea
-                    readOnly
+                  <Textarea 
+                    readOnly 
                     value={`CREATE TABLE users (\n  id TEXT PRIMARY KEY,\n  email TEXT UNIQUE NOT NULL,\n  created_at INTEGER DEFAULT (strftime('%s', 'now')),\n  tier INTEGER DEFAULT 0\n);`}
-                    className="bg-zinc-900 border-zinc-800 text-emerald-500/80 font-mono text-xs min-h-[120px] resize-none focus-visible:ring-0"
+                    className="bg-zinc-900 border-zinc-800 text-emerald-500/80 font-mono text-xs min-h-[120px] resize-none focus-visible:ring-0" 
                   />
                 </div>
               </CardContent>

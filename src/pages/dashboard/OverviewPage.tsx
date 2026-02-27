@@ -1,8 +1,9 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Activity, Users, Zap, ShieldAlert, ArrowUpRight, Cpu } from 'lucide-react';
-import { 
-  AreaChart, 
+import {
+  AreaChart,
   Area, 
   XAxis, 
   YAxis, 
