@@ -20,6 +20,12 @@ import { WorkerManagerPage } from '@/pages/dashboard/WorkerManagerPage'
 import { SystemEngineerPage } from '@/pages/dashboard/SystemEngineerPage'
 import { SchemaBuilderPage } from '@/pages/dashboard/SchemaBuilderPage'
 import { KnowledgeLibraryPage } from '@/pages/dashboard/KnowledgeLibraryPage'
+import { HealthPage } from '@/pages/dashboard/HealthPage'
+import { ToolShopPage } from '@/pages/dashboard/ToolShopPage'
+import { StoragePage } from '@/pages/dashboard/StoragePage'
+import { SafetyPage } from '@/pages/dashboard/SafetyPage'
+import { TerminalPage } from '@/pages/dashboard/TerminalPage'
+import { SettingsPage } from '@/pages/dashboard/SettingsPage'
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -35,11 +41,17 @@ const router = createBrowserRouter([
       { path: "", element: <Navigate to="overview" replace /> },
       { path: "overview", element: <OverviewPage /> },
       { path: "agents", element: <AgentManagerPage /> },
+      { path: "health", element: <HealthPage /> },
       { path: "workers", element: <WorkerManagerPage /> },
       { path: "systems", element: <SystemEngineerPage /> },
       { path: "database", element: <SchemaBuilderPage /> },
+      { path: "storage", element: <StoragePage /> },
       { path: "library", element: <KnowledgeLibraryPage /> },
-      { path: "*", element: <div className="p-8 text-zinc-500 font-mono text-xs">Module under construction in Phase 2...</div> },
+      { path: "tools", element: <ToolShopPage /> },
+      { path: "safety", element: <SafetyPage /> },
+      { path: "terminal", element: <TerminalPage /> },
+      { path: "settings", element: <SettingsPage /> },
+      { path: "*", element: <div className="p-8 text-zinc-500 font-mono text-xs">Module under construction in Phase 4...</div> },
     ]
   }
 ]);

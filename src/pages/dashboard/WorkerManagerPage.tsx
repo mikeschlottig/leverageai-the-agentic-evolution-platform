@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Cpu, Zap, AlertCircle, Play, Settings, History, Activity } from 'lucide-react';
+import { Cpu, Zap, Play, Settings, History, Activity } from 'lucide-react';
 const workers = [
   { name: 'auth-service', status: 'Online', cpu: '0.4ms', requests: '1.2M', errors: '0.01%' },
   { name: 'image-optimizer', status: 'Online', cpu: '12.5ms', requests: '450k', errors: '0.00%' },
@@ -88,7 +88,8 @@ export function WorkerManagerPage() {
                     <p>[08:42:05] <span className="text-indigo-400">INFO</span> Fetching dependencies (npm install)</p>
                     <p>[08:42:12] <span className="text-indigo-400">INFO</span> Compiling TypeScript assets</p>
                     <p>[08:42:15] <span className="text-indigo-400">INFO</span> Bundling with esbuild...</p>
-                    <p className="text-zinc-300">[08:42:18] WRANGLER: Compressing bundle (2.4MB -> 1.1MB)</p>
+                    {/* Fixed raw arrow character causing JSX parser issues */}
+                    <p className="text-zinc-300">[08:42:18] WRANGLER: Compressing bundle (2.4MB &rarr; 1.1MB)</p>
                     <p>[08:42:20] <span className="text-emerald-400">SUCCESS</span> Deployment complete (Version 4.12.0)</p>
                     <p className="text-zinc-600">--- END OF STREAM ---</p>
                     {Array.from({ length: 10 }).map((_, i) => (
