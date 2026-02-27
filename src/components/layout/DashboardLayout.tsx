@@ -21,11 +21,7 @@ export default function DashboardLayout() {
           </header>
           <main className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative">
             <div className="absolute inset-0 bg-grid-pattern pointer-events-none opacity-20" />
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-              <div className="py-8 md:py-10 lg:py-12">
-                <Outlet />
-              </div>
-            </div>
+            <Outlet />
           </main>
         </SidebarInset>
         <CopilotPanel />

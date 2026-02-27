@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingBag, Github, Slack, Globe, Search, Code, Cloud, Terminal, Check, Power } from 'lucide-react';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 const toolCatalog = [
   { id: 'git', name: 'GitHub Integration', desc: 'Manage repositories, PRs and issues via Agent', icon: Github, color: 'text-white' },
   { id: 'slack', name: 'Slack Connector', desc: 'Enable agents to post updates and respond in channels', icon: Slack, color: 'text-pink-500' },
@@ -16,8 +17,8 @@ const toolCatalog = [
 export function ToolShopPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [connectedTools, setConnectedTools] = useState<Set<string>>(new Set(['web', 'cf']));
-  const filteredTools = toolCatalog.filter(t => 
-    t.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+  const filteredTools = toolCatalog.filter(t =>
+    t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     t.desc.toLowerCase().includes(searchTerm.toLowerCase())
   );
   const toggleTool = (id: string, name: string) => {
@@ -80,12 +81,12 @@ export function ToolShopPage() {
                   <p className="text-xs text-zinc-500 leading-relaxed">{tool.desc}</p>
                 </CardContent>
                 <CardFooter className="p-4 pt-0">
-                  <Button 
+                  <Button
                     onClick={() => toggleTool(tool.id, tool.name)}
                     className={cn(
                       "w-full text-[10px] uppercase font-bold tracking-widest transition-all",
-                      isConnected 
-                        ? "bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20" 
+                      isConnected
+                        ? "bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20"
                         : "bg-zinc-800 hover:bg-emerald-600 text-zinc-300 hover:text-white"
                     )}
                   >
