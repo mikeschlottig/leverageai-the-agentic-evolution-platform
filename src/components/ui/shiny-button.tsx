@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { motion, HTMLMotionProps } from 'framer-motion';
-interface ShinyButtonProps extends Omit<HTMLMotionProps<"button">, "onDrag"> {
+import { motion } from 'framer-motion';
+interface ShinyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
 }
 export function ShinyButton({ children, className, ...props }: ShinyButtonProps) {

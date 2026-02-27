@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { Bot, Send, X, Minimize2, Maximize2, Sparkles, Copy, Check } from 'lucide-react';
+import { Bot, Send, X, Minimize2, Maximize2, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -8,27 +7,18 @@ import { chatService } from '@/lib/chat';
 import { cn } from '@/lib/utils';
 import type { Message } from '../../worker/types';
 import { motion, AnimatePresence } from 'framer-motion';
-import { toast } from 'sonner';
 export function CopilotPanel() {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [copiedId, setCopiedId] = useState<string | null>(null);
-  const location = useLocation();
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, loading]);
-  const handleCopy = (text: string, id: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedId(id);
-    toast.success("Configuration copied to clipboard");
-    setTimeout(() => setCopiedId(null), 2000);
-  };
   const handleSend = async () => {
     if (!input.trim() || loading) return;
     const text = input;
@@ -42,11 +32,8 @@ export function CopilotPanel() {
     };
     setMessages(prev => [...prev, userMsg]);
     try {
-      // Hidden context enrichment
-      const moduleName = location.pathname.split('/').pop() || 'overview';
-      const enrichedMessage = `[Context: User is currently on the ${moduleName} module] ${text}`;
       let assistantContent = '';
-      await chatService.sendMessage(enrichedMessage, undefined, (chunk) => {
+      await chatService.sendMessage(text, undefined, (chunk) => {
         assistantContent += chunk;
       });
       const assistantMsg: Message = {
@@ -58,7 +45,6 @@ export function CopilotPanel() {
       setMessages(prev => [...prev, assistantMsg]);
     } catch (err) {
       console.error(err);
-      toast.error("Copilot link interrupted. Check network.");
     } finally {
       setLoading(false);
     }
@@ -100,24 +86,16 @@ export function CopilotPanel() {
                 {messages.length === 0 && (
                   <div className="h-full flex flex-col items-center justify-center text-center space-y-4 opacity-50">
                     <Sparkles className="h-10 w-10 text-emerald-500" />
-                    <p className="text-xs max-w-[200px]">I'm your context-aware commander on the <span className="text-emerald-400 uppercase font-bold">{location.pathname.split('/').pop()}</span> page.</p>
+                    <p className="text-xs max-w-[200px]">I'm your persistent context-aware commander. Ask me anything about your Agentic Evolution.</p>
                   </div>
                 )}
                 {messages.map((m) => (
-                  <div key={m.id} className={cn("flex flex-col gap-1", m.role === 'user' ? "items-end" : "items-start")}>
+                  <div key={m.id} className={cn("flex", m.role === 'user' ? "justify-end" : "justify-start")}>
                     <div className={cn(
-                      "max-w-[85%] rounded-xl px-4 py-3 text-xs leading-relaxed relative group",
+                      "max-w-[85%] rounded-xl px-4 py-3 text-xs leading-relaxed",
                       m.role === 'user' ? "bg-indigo-600 text-white" : "bg-zinc-900 border border-zinc-800 text-zinc-100"
                     )}>
                       <div className="whitespace-pre-wrap">{m.content}</div>
-                      {m.role === 'assistant' && (
-                        <button 
-                          onClick={() => handleCopy(m.content, m.id)}
-                          className="absolute -right-2 -bottom-2 h-6 w-6 rounded bg-zinc-800 border border-zinc-700 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-zinc-700"
-                        >
-                          {copiedId === m.id ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3 text-zinc-400" />}
-                        </button>
-                      )}
                     </div>
                   </div>
                 ))}
@@ -142,16 +120,16 @@ export function CopilotPanel() {
                     placeholder="Command copilot..."
                     className="min-h-[80px] bg-zinc-900 border-zinc-800 text-zinc-100 focus-visible:ring-emerald-500/50 resize-none pr-12 text-xs"
                   />
-                  <Button
+                  <Button 
                     onClick={handleSend}
                     disabled={!input.trim() || loading}
-                    size="icon"
+                    size="icon" 
                     className="absolute bottom-2 right-2 h-8 w-8 bg-emerald-600 hover:bg-emerald-500 text-white"
                   >
                     <Send className="h-4 w-4" />
                   </Button>
                 </div>
-                <p className="text-[10px] text-zinc-500 mt-2 text-center">Enriched with <span className="text-zinc-400">{location.pathname}</span> context.</p>
+                <p className="text-[10px] text-zinc-500 mt-2 text-center">AI may produce errors. Verify critical code.</p>
               </div>
             </Card>
           </motion.div>
