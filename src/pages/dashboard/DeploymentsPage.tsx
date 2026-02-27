@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
-import { GitCommit, Rocket, History, Terminal, CheckCircle2, XCircle, RotateCcw, Clock } from 'lucide-react';
+import { GitCommit, Rocket, History, Terminal, CheckCircle2, RotateCcw, Clock, Activity } from 'lucide-react';
 const history = [
   { hash: '8a2f1c9', env: 'Production', time: '12m ago', user: 'system_auth', status: 'Success' },
   { hash: '4d1e2b8', env: 'Staging', time: '1h ago', user: 'admin_evo', status: 'Success' },
