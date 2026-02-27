@@ -5,6 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Activity, Globe, Server, CheckCircle2, AlertCircle, Zap, Users } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { cn } from '@/lib/utils';
 const performanceData = [
   { time: '10:00', latency: 45, p99: 82 },
   { time: '11:00', latency: 42, p99: 78 },

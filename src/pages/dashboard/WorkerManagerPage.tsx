@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 import { Cpu, Zap, Play, Settings, History, Activity, CheckCircle2, Circle } from 'lucide-react';
 const workers = [
   { name: 'auth-service', status: 'Online', cpu: '0.4ms', requests: '1.2M', errors: '0.01%' },
@@ -18,6 +19,7 @@ const pipelineStages = [
   { name: 'Health Check', status: 'pending', time: 'Waiting' },
 ];
 export function WorkerManagerPage() {
+  const [isDeploying, setIsDeploying] = React.useState(false);
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="py-8 md:py-10 lg:py-12 space-y-8 animate-fade-in relative z-10">
@@ -27,10 +29,21 @@ export function WorkerManagerPage() {
             <p className="text-zinc-500 text-sm">Edge compute orchestration and deployment logs.</p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" className="border-zinc-800 text-zinc-400 font-bold uppercase text-xs tracking-widest">
+            <Button variant="outline" className="border-zinc-800 text-zinc-400 font-bold uppercase text-xs tracking-widest" onClick={() => toast('Rollback initiated - checking previous versions')}>
               <History className="h-4 w-4 mr-2" /> Rollback
             </Button>
-            <Button className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold uppercase text-xs tracking-widest shadow-indigo-500/20 shadow-lg">
+            <Button disabled={isDeploying} className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold uppercase text-xs tracking-widest shadow-indigo-500/20 shadow-lg" onClick={() => {
+              setIsDeploying(true);
+              const deployP = new Promise((res, rej) => {
+                setTimeout(() => Math.random() < 0.95 ? res() : rej(new Error()), 4000);
+              });
+              toast.promise(deployP, {
+                loading: 'Deploying all workers...',
+                success: 'All workers deployed to global edge PoPs',
+                error: 'Deployment pipeline failure - retrying'
+              });
+              deployP.finally(() => setIsDeploying(false));
+            }}>
               <Zap className="h-4 w-4 mr-2" /> Deploy All
             </Button>
           </div>
@@ -63,13 +76,17 @@ export function WorkerManagerPage() {
                       </div>
                     </div>
                     <div className="flex gap-2 pt-2 border-t border-zinc-800/50">
-                      <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] uppercase font-bold text-zinc-500 hover:text-zinc-100">
+                      <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] uppercase font-bold text-zinc-500 hover:text-zinc-100" onClick={() => toast.promise(new Promise((res) => setTimeout(res, 1200)), {
+                        loading: `Launching ${worker.name}...`,
+                        success: `${worker.name} executed`,
+                        error: 'Execution failed'
+                      })}>
                         <Play className="h-3.5 w-3.5 mr-1" /> Run
                       </Button>
-                      <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] uppercase font-bold text-zinc-500 hover:text-zinc-100">
+                      <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] uppercase font-bold text-zinc-500 hover:text-zinc-100" onClick={() => toast.info(`${worker.name} configuration panel`)}>
                         <Settings className="h-3.5 w-3.5 mr-1" /> Config
                       </Button>
-                      <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] uppercase font-bold text-zinc-500 hover:text-zinc-100">
+                      <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] uppercase font-bold text-zinc-500 hover:text-zinc-100" onClick={() => toast.info(`${worker.name} analytics loading`)}>
                         <Activity className="h-3.5 w-3.5 mr-1" /> Stats
                       </Button>
                     </div>

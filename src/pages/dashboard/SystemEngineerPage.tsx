@@ -27,14 +27,38 @@ export function SystemEngineerPage() {
   }, [blueprint]);
   const handleDryRun = () => {
     setIsDryRunning(true);
-    toast.promise(
-      new Promise((resolve) => setTimeout(resolve, 2000)),
-      {
-        loading: 'Executing logic validation pass...',
-        success: 'Logic simulation verified. Zero conflicts detected.',
-        error: 'Logic error detected in node: EVOLUTION_CORE',
-      }
-    ).finally(() => setIsDryRunning(false));
+    const dryRunPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (Math.random() < 0.05) {
+          reject(new Error('Simulated validation error in node: EVOLUTION_CORE'));
+        } else {
+          resolve('success');
+        }
+      }, 2000);
+    });
+    toast.promise(dryRunPromise, {
+      loading: 'Executing logic validation pass...',
+      success: 'Logic simulation verified. Zero conflicts detected.',
+      error: 'Logic error detected in node: EVOLUTION_CORE',
+    });
+    dryRunPromise.finally(() => setIsDryRunning(false));
+  };
+
+  const handleDeploy = () => {
+    const deployPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (Math.random() < 0.1) {
+          reject(new Error('Deployment rejected by safety guardrails'));
+        } else {
+          resolve('success');
+        }
+      }, 5000);
+    });
+    toast.promise(deployPromise, {
+      loading: 'Deploying agentic blueprint to production...',
+      success: 'Blueprint deployed successfully - live in all regions',
+      error: 'Deployment rejected by safety guardrails',
+    });
   };
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,7 +73,7 @@ export function SystemEngineerPage() {
               {isDryRunning ? <div className="h-3 w-3 border-2 border-zinc-500 border-t-transparent rounded-full animate-spin mr-2" /> : <Play className="h-4 w-4 mr-2" />}
               Dry Run
             </Button>
-            <Button className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold uppercase text-xs tracking-widest">
+            <Button className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold uppercase text-xs tracking-widest" onClick={handleDeploy}>
               <Save className="h-4 w-4 mr-2" /> Deploy Logic
             </Button>
           </div>
