@@ -34,7 +34,7 @@ export function WorkerManagerPage() {
             </Button>
             <Button disabled={isDeploying} className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold uppercase text-xs tracking-widest shadow-indigo-500/20 shadow-lg" onClick={() => {
               setIsDeploying(true);
-              const deployP = new Promise((res, rej) => {
+              const deployP = new Promise<void>((res, rej) => {
                 setTimeout(() => Math.random() < 0.95 ? res() : rej(new Error()), 4000);
               });
               toast.promise(deployP, {
@@ -76,7 +76,7 @@ export function WorkerManagerPage() {
                       </div>
                     </div>
                     <div className="flex gap-2 pt-2 border-t border-zinc-800/50">
-                      <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] uppercase font-bold text-zinc-500 hover:text-zinc-100" onClick={() => toast.promise(new Promise((res) => setTimeout(res, 1200)), {
+                      <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] uppercase font-bold text-zinc-500 hover:text-zinc-100" onClick={() => toast.promise(new Promise<void>((res) => setTimeout(res, 1200)), {
                         loading: `Launching ${worker.name}...`,
                         success: `${worker.name} executed`,
                         error: 'Execution failed'

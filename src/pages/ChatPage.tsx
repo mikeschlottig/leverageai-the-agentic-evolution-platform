@@ -27,9 +27,6 @@ import { chatService, MODELS, formatTime, renderToolCall, SessionInfo, Message }
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { Progress } from '@/components/ui/progress';
-import { Send } from 'lucide-react';
-const formatRelative = (ts: number) => `${Math.round((Date.now() - ts) / (1000*60*60*24))}d ago`;
-
 export function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -168,7 +165,7 @@ export function ChatPage() {
                   <ScrollArea className="h-[calc(100vh-120px)] px-4 py-2">
                     <div className="space-y-2">
                       {sessions.map((session) => (
-                        <div key={session.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-zinc-900 cursor-pointer group" onClick={() => { chatService.switchSession(session.id); loadMessages(); setOpenSessions(false); toast.success('Switched to session'); }}>
+                        <div key={session.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-zinc-900 cursor-pointer group">
                           <div className="flex items-center gap-3">
                             <Avatar className="h-8 w-8">
                               <AvatarFallback className="bg-gradient-to-br from-indigo-500 to-emerald-500 text-white text-xs font-bold">
@@ -177,14 +174,14 @@ export function ChatPage() {
                             </Avatar>
                             <div className="flex flex-col">
                               <span className="text-sm font-medium text-zinc-100 truncate max-w-[200px]">{session.title}</span>
-                              <span className="text-xs text-zinc-500">{formatRelative(session.lastActive)}</span>
+                              <span className="text-xs text-zinc-500">{formatDistanceToNow(session.lastActive)} ago</span>
                             </div>
                           </div>
                           <Button
                             variant="ghost"
                             size="icon"
                             className="h-7 w-7 opacity-0 group-hover:opacity-100"
-                            onClick={(e) => { e.stopPropagation(); handleDeleteSession(session.id); }}
+                            onClick={() => handleDeleteSession(session.id)}
                           >
                             <Trash2 className="h-3 w-3" />
                           </Button>

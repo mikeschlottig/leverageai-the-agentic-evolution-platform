@@ -13,7 +13,7 @@ import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { MessageCircle, Trash2, Bot, User, Copy, Check, Zap, Plus } from 'lucide-react';
+import { MessageCircle, Trash2, Bot, User, Copy, Check, Zap } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { chatService, formatTime, renderToolCall, Message } from '@/lib/chat';
 import { toast } from 'sonner';
@@ -74,11 +74,7 @@ export function WorkersAIChatPage() {
           error: 'Failed to send message'
         }
       );
-      // Reload only new assistant messages to prevent duplication
-      const res = await chatService.getMessages();
-      if (res.success && res.data) {
-        setMessages(res.data.messages);
-      }
+      await loadMessages();
     } catch (error) {
       toast.error('Failed to send message');
     } finally {
@@ -119,40 +115,6 @@ export function WorkersAIChatPage() {
                 <div className="h-1.5 w-1.5 bg-amber-500 rounded-full animate-pulse" />
                 Free tier: ~100 req/day
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={async () => {
-                  try {
-                    await chatService.clearMessages();
-                    setMessages([]);
-                    toast.success('New chat started');
-                  } catch (error) {
-                    toast.error('Failed to start new chat');
-                  }
-                }}
-                className="h-9 border-zinc-700 hover:bg-zinc-900"
-                title="New Chat"
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={async () => {
-                  try {
-                    await chatService.clearMessages();
-                    setMessages([]);
-                    toast.success('Chat cleared');
-                  } catch (error) {
-                    toast.error('Failed to clear chat');
-                  }
-                }}
-                className="h-9 border-zinc-700 hover:bg-zinc-900"
-                title="Clear Chat"
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
               <Button onClick={handleUpdateModel} size="sm" className="h-9">
                 Update Model
               </Button>
