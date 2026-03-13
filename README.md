@@ -2,7 +2,7 @@
 
 A production-ready AI agent chatbot built with **Cloudflare Workers**, **Cloudflare Agents SDK**, and **Model Context Protocol (MCP)**. Features intelligent tool usage, multi-model support, and persistent conversation management via Durable Objects.
 
-[cloudflarebutton]
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/mikeschlottig/leverageai-the-agentic-evolution-platform)
 
 ## 🚀 Features
 
@@ -69,7 +69,7 @@ bun run build
 bun run deploy
 ```
 
-[cloudflarebutton]
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/mikeschlottig/leverageai-the-agentic-evolution-platform)
 
 ## 💬 Usage
 
